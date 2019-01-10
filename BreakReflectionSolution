@@ -1,0 +1,42 @@
+package singleton.reflection;
+
+import java.lang.reflect.Constructor;
+
+class singleton{	// singleton class
+	private static singleton instance = new singleton();
+	
+	private singleton() {	
+		
+		  if(instance !=null) { 
+			  System.out.println("new instance cannot be created");
+			  throw new IllegalStateException(); 
+		  }
+		 
+	  System.out.println("new instance created");
+	}
+
+	public static singleton getInstance() {return instance;}
+}
+
+public class BreakReflectionSolution {
+
+	public static void main(String[] args) {
+		try {
+		singleton obj1 = null;
+		
+			for(Constructor cnst : singleton.class.getDeclaredConstructors()) {
+				cnst.setAccessible(true);
+				obj1=(singleton)cnst.newInstance();
+			}
+			
+			System.out.println(obj1.hashCode());
+		
+		}
+		catch (Exception ex) {
+			//System.out.println(ex.getMessage());
+		}
+		
+		
+		
+	}
+}
