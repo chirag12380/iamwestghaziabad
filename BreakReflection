@@ -1,0 +1,29 @@
+package singleton.reflection;
+
+import java.lang.reflect.Constructor;
+
+class single{	// singleton class
+	private static single instance = new single();
+	
+	private single() {	}
+
+	public static single getInstance() {return instance;}
+}
+
+public class BreakReflection {
+
+	public static void main(String[] args) throws Exception{
+
+		single obj1 = null;
+		single obj2 = null;
+		
+		for(Constructor cnst : single.class.getDeclaredConstructors()) {
+			cnst.setAccessible(true);
+			obj1=(single)cnst.newInstance();
+			obj2=(single)cnst.newInstance();
+		}
+		
+		System.out.println(obj1.hashCode());
+		System.out.println(obj2.hashCode());
+	}
+}
